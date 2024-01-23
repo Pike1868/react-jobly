@@ -4,30 +4,32 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
+import { FormControlLabel, Checkbox } from "@mui/material";
 import Button from "@mui/material/Button";
 import JoblyApi from "../api/JoblyApi";
-import CompanyCard from "../components/CompanyCard";
+import JobCard from "../components/JobCard";
 
 export default function CompaniesPage() {
-  const [companiesList, setCompaniesList] = useState([]);
+  const [jobsList, setJobsList] = useState([]);
   const [search, setSearch] = useState({
-    name: "",
-    minEmployees: "",
-    maxEmployees: "",
+    title: "",
+    minSalary: "",
+    hasEquity: false,
   });
   const [error, setError] = useState("");
 
-  const fetchCompanies = async (searchParams = {}) => {
+  const fetchJobs = async (searchParams = {}) => {
+    console.log(searchParams);
     try {
-      const response = await JoblyApi.getAllCompanies(searchParams);
-      setCompaniesList(response.companies);
+      const response = await JoblyApi.getAllJobs(searchParams);
+      setJobsList(response.jobs);
     } catch (error) {
-      console.error("Error fetching companies:", error);
+      console.error("Error fetching jobs:", error);
     }
   };
 
   useEffect(() => {
-    fetchCompanies();
+    fetchJobs();
   }, []);
 
   const handleSearchChange = (e) => {
@@ -37,12 +39,8 @@ export default function CompaniesPage() {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log(search);
-    if (parseInt(search.minEmployees) > parseInt(search.maxEmployees)) {
-      setError("Minimum employees cannot be greater than maximum employees.");
-      return;
-    }
     setError("");
-    fetchCompanies(search);
+    fetchJobs(search);
   };
 
   return (
@@ -62,35 +60,39 @@ export default function CompaniesPage() {
             color="text.primary"
             gutterBottom
           >
-            Search Companies
+            Search Jobs
           </Typography>
           {error && <Typography color="error">{error}</Typography>}
           <Container maxWidth="sm">
             <form onSubmit={handleSearchSubmit}>
               <TextField
-                label="Company Name"
-                name="name"
-                value={search.name}
+                label="Job Title"
+                name="title"
+                value={search.title}
                 onChange={handleSearchChange}
                 margin="normal"
                 fullWidth
               />
               <TextField
-                label="Min Employees"
-                name="minEmployees"
-                value={search.minEmployees}
+                label="Minimum Salary"
+                name="minSalary"
+                value={search.minSalary}
                 onChange={handleSearchChange}
                 type="number"
                 margin="normal"
               />
-              <TextField
-                label="Max Employees"
-                name="maxEmployees"
-                value={search.maxEmployees}
-                onChange={handleSearchChange}
-                type="number"
-                margin="normal"
-              />
+              <Box>
+                <Checkbox
+                  checked={search.hasEquity}
+                  onChange={(e) =>
+                    setSearch({ ...search, hasEquity: e.target.checked })
+                  }
+                  name="hasEquity"
+                />
+                <Typography component="label" htmlFor="hasEquity">
+                  Has Equity
+                </Typography>
+              </Box>
               <Button type="submit" variant="contained" color="primary">
                 Search
               </Button>
@@ -101,8 +103,8 @@ export default function CompaniesPage() {
 
       <Container sx={{ py: 8 }} maxWidth="md">
         <Grid container spacing={4}>
-          {companiesList.map((company) => (
-            <CompanyCard key={company.handle} company={company} />
+          {jobsList.map((job) => (
+            <JobCard key={job.id} job={job} />
           ))}
         </Grid>
       </Container>
