@@ -22,12 +22,11 @@ class JoblyApi {
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${JoblyApi.token}` };
     const params = method === "get" ? data : {};
-
     try {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
-      console.error("API Error:", err.response);
-      let message = err.response.data.error.message;
+      console.error("API Error:", err); //err.response
+      let message = err; //err.response.data.error.message ||
       throw Array.isArray(message) ? message : [message];
     }
   }
@@ -43,15 +42,12 @@ class JoblyApi {
     const endpoint = "auth/register";
     const method = "post";
     const data = { username, password, firstName, lastName, email };
-    console.log("Register method called:", data);
 
     try {
       const response = await this.request(endpoint, data, method);
-      if (response.status === 200) {
-        JoblyApi.token = response.token;
-        localStorage.setItem("joblyToken", response.token);
-        return response.token;
-      }
+      JoblyApi.token = response.token;
+      localStorage.setItem("joblyToken", response.token);
+      return response.token;
     } catch (err) {
       throw err;
     }
@@ -65,24 +61,61 @@ class JoblyApi {
     const endpoint = "auth/token";
     const method = "post";
     const data = { username, password };
-    console.log("Login method called:");
     try {
       const response = await this.request(endpoint, data, method);
       //Save token to api class
-      if (response.status === 200) {
-        JoblyApi.token = response.token;
-        localStorage.setItem("joblyToken", response.token);
-        return response.token;
-      }
+      JoblyApi.token = response.token;
+      localStorage.setItem("joblyToken", response.token);
+      return response.token;
     } catch (err) {
       throw err;
     }
   }
+
+  /** GET /  =>
+   * { companies: [ { handle, name, description, numEmployees, logoUrl }, ...] }
+   * Returns an array of company objects
+   *
+   * Can filter on provided search filters:
+   * - minEmployees
+   * - maxEmployees
+   * - nameLike (will find case-insensitive, partial matches)
+   */
+
+  static async getAllCompanies(query = {}) {
+    const { name, minEmployees, maxEmployees } = query;
+
+    // Build url with company filters as query strings
+    let queryString = "";
+    const queryParams = [];
+    if (name) queryParams.push(`name=${name}`);
+    if (minEmployees) queryParams.push(`minEmployees=${minEmployees}`);
+    if (maxEmployees) queryParams.push(`maxEmployees=${maxEmployees}`);
+
+    if (queryParams.length) {
+      queryString = `?${queryParams.join("&")}`;
+    }
+
+    const endpoint = `companies${queryString}`;
+    try {
+      const response = await this.request(endpoint);
+      return response;
+    } catch (err) {
+      console.error("Error in getAllCompanies:", err);
+      throw err;
+    }
+  }
+
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
-    let res = await this.request(`companies/${handle}`);
-    return res.company;
+    try {
+      let response = await this.request(`companies/${handle}`);
+      return response;
+    } catch (err) {
+      console.error("Error in getCompany:handle", err);
+      throw err;
+    }
   }
 }
 

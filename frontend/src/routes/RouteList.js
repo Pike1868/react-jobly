@@ -4,6 +4,8 @@ import HomePage from "../pages/HomePage";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import { useUserContext } from "../context/UserContext";
+import CompaniesPage from "../pages/CompaniesPage";
+import CompanyProfile from "../pages/CompanyProfile";
 
 /**
  * RouteList Component:
@@ -25,6 +27,8 @@ const RouteList = () => {
       {user ? (
         <>
           <Route path="/" element={<HomePage />} />
+          <Route path="/companies" element={<CompaniesPage />} />
+          <Route path="/companies/:handle" element={<CompanyProfile />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </>
       ) : (
