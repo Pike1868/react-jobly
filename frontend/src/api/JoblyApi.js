@@ -72,7 +72,7 @@ class JoblyApi {
     }
   }
 
-  /** GET /  =>
+  /** GET "/companies/""  =>
    * { companies: [ { handle, name, description, numEmployees, logoUrl }, ...] }
    * Returns an array of company objects
    *
@@ -114,6 +114,39 @@ class JoblyApi {
       return response;
     } catch (err) {
       console.error("Error in getCompany:handle", err);
+      throw err;
+    }
+  }
+
+  /** GET "/jobs/" => { jobs: [ { id, title, salary, equity, companyHandle, companyName }, ...] }
+   * Returns an object with an array of jobs
+   *
+   * Can filter on:
+   * - minSalary
+   * - hasEquity (true returns only jobs with equity > 0, other values ignored)
+   * - title (will find case-insensitive, partial matches)
+   */
+
+  static async getAllJobs(query = {}) {
+    const { title, minSalary, hasEquity } = query;
+
+    // Build url with job filters as query strings
+    let queryString = "";
+    const queryParams = [];
+    if (title) queryParams.push(`title=${title}`);
+    if (minSalary) queryParams.push(`minSalary=${minSalary}`);
+    if (hasEquity !== undefined) queryParams.push(`hasEquity=${hasEquity}`);
+
+    if (queryParams.length) {
+      queryString = `?${queryParams.join("&")}`;
+    }
+
+    const endpoint = `jobs${queryString}`;
+    try {
+      const response = await this.request(endpoint);
+      return response;
+    } catch (err) {
+      console.error("Error in getAllJobs:", err);
       throw err;
     }
   }

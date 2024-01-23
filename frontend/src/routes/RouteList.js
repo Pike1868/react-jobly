@@ -6,6 +6,7 @@ import SignUp from "../pages/SignUp";
 import { useUserContext } from "../context/UserContext";
 import CompaniesPage from "../pages/CompaniesPage";
 import CompanyProfile from "../pages/CompanyProfile";
+import JobsPage from "../pages/JobsPage";
 
 /**
  * RouteList Component:
@@ -28,6 +29,7 @@ const RouteList = () => {
         <>
           <Route path="/" element={<HomePage />} />
           <Route path="/companies" element={<CompaniesPage />} />
+          <Route path="/jobs" element={<JobsPage />} />
           <Route path="/companies/:handle" element={<CompanyProfile />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </>
