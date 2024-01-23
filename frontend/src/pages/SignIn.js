@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -47,7 +45,7 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#253031", p: 3 }}>
+        <Avatar sx={{ m: 1, bgcolor: "#253031", p: 2 }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -56,7 +54,7 @@ export default function SignIn() {
 
         {error && <Typography color="error">{error}</Typography>}
 
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -77,10 +75,6 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
             type="submit"
             fullWidth
@@ -90,14 +84,9 @@ export default function SignIn() {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link href="/signup" variant="body2" >
+                Don't have an account? Sign Up!
               </Link>
             </Grid>
           </Grid>

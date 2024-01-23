@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SignUp";
 import { useUserContext } from "../context/UserContext";
 
 /**
@@ -9,6 +10,8 @@ import { useUserContext } from "../context/UserContext";
  *
  * Defines all routes for app
  * "/": Displays homepage and user welcome message
+ * "/signin": Displays form for existing users to sign in
+ * "/signup": Displays form for new users to sign up
  * - "/*": A catch-all route that redirects any paths with no matches
  *
  */
@@ -27,6 +30,7 @@ const RouteList = () => {
       ) : (
         <>
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/*" element={<Navigate to="/signin" />} />
         </>
       )}

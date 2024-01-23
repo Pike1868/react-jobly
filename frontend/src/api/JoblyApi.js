@@ -34,18 +34,46 @@ class JoblyApi {
 
   // Individual API routes
 
-  // POST "/auth/token" - Authenticate user and return a token
+  /** POST "/auth/register" - { user } => { token }
+   * user must include { username, password, firstName, lastName, email }
+   * Returns JWT token
+   */
+
+  static async register({ username, password, firstName, lastName, email }) {
+    const endpoint = "auth/register";
+    const method = "post";
+    const data = { username, password, firstName, lastName, email };
+    console.log("Register method called:", data);
+
+    try {
+      const response = await this.request(endpoint, data, method);
+      if (response.status === 200) {
+        JoblyApi.token = response.token;
+        localStorage.setItem("joblyToken", response.token);
+        return response.token;
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  /** POST "/auth/token" - { username, password } => { token }
+   * Authenticates username and password
+   * Returns JWT token
+   **/
   static async login(username, password) {
     const endpoint = "auth/token";
     const method = "post";
     const data = { username, password };
-    console.log("Login method:");
+    console.log("Login method called:");
     try {
       const response = await this.request(endpoint, data, method);
       //Save token to api class
-      JoblyApi.token = response.token;
-      localStorage.setItem("joblyToken", response.token);
-      return response.token;
+      if (response.status === 200) {
+        JoblyApi.token = response.token;
+        localStorage.setItem("joblyToken", response.token);
+        return response.token;
+      }
     } catch (err) {
       throw err;
     }
@@ -56,8 +84,6 @@ class JoblyApi {
     let res = await this.request(`companies/${handle}`);
     return res.company;
   }
-
-  // obviously, you'll add a lot here ...
 }
 
 export default JoblyApi;
