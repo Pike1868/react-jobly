@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 /** API Class.
  *
@@ -21,9 +21,7 @@ class JoblyApi {
     //this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${JoblyApi.token}` };
-    const params = (method === "get")
-        ? data
-        : {};
+    const params = method === "get" ? data : {};
 
     try {
       return (await axios({ url, method, data, params, headers })).data;
@@ -36,6 +34,22 @@ class JoblyApi {
 
   // Individual API routes
 
+  // POST "/auth/token" - Authenticate user and return a token
+  static async login(username, password) {
+    const endpoint = "auth/token";
+    const method = "post";
+    const data = { username, password };
+    console.log("Login method:");
+    try {
+      const response = await this.request(endpoint, data, method);
+      //Save token to api class
+      JoblyApi.token = response.token;
+      localStorage.setItem("joblyToken", response.token);
+      return response.token;
+    } catch (err) {
+      throw err;
+    }
+  }
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
@@ -46,7 +60,4 @@ class JoblyApi {
   // obviously, you'll add a lot here ...
 }
 
-// for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-    "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-    "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+export default JoblyApi;
