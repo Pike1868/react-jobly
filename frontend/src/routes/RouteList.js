@@ -7,6 +7,7 @@ import { useUserContext } from "../context/UserContext";
 import CompaniesPage from "../pages/CompaniesPage";
 import CompanyProfile from "../pages/CompanyProfile";
 import JobsPage from "../pages/JobsPage";
+import UserProfile from "../pages/UserProfile";
 
 /**
  * RouteList Component:
@@ -22,7 +23,6 @@ import JobsPage from "../pages/JobsPage";
 // RouteList Component
 const RouteList = () => {
   const { user } = useUserContext();
-  console.log(user);
   return (
     <Routes>
       {user ? (
@@ -30,6 +30,7 @@ const RouteList = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/companies/:handle" element={<CompanyProfile />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </>

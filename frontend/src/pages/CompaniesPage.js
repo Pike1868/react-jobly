@@ -36,7 +36,6 @@ export default function CompaniesPage() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log(search);
     if (parseInt(search.minEmployees) > parseInt(search.maxEmployees)) {
       setError("Minimum employees cannot be greater than maximum employees.");
       return;
@@ -64,6 +63,7 @@ export default function CompaniesPage() {
           >
             Search Companies
           </Typography>
+
           {error && <Typography color="error">{error}</Typography>}
           <Container maxWidth="sm">
             <form onSubmit={handleSearchSubmit}>
