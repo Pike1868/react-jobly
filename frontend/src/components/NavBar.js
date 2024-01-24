@@ -1,10 +1,6 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
+import { AppBar, Toolbar, Typography, Button, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
@@ -14,7 +10,6 @@ const NavBar = () => {
   const logout = () => {
     localStorage.removeItem("joblyToken");
     setUser(null);
-    console.log("logging out now...");
     navigate("/");
   };
   return (

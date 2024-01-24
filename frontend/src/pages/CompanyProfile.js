@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import JoblyApi from "../api/JoblyApi";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import JobCard from "../components/JobCard";
+import { Box, Container, Typography } from "@mui/material";
+import JobList from "../components/JobList";
 
 export default function CompanyProfile() {
   const [company, setCompany] = useState(null);
@@ -50,11 +47,7 @@ export default function CompanyProfile() {
       </Box>
 
       <Container sx={{ py: 4 }} maxWidth="md">
-        <Grid container spacing={4}>
-          {company.jobs.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
-        </Grid>
+        <JobList jobs={company.jobs} />
       </Container>
     </Box>
   );

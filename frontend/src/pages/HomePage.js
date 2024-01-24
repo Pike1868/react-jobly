@@ -1,7 +1,5 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import { Box, Container, Typography } from "@mui/material";
 import { useUserContext } from "../context/UserContext";
 
 const HomePage = () => {

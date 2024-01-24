@@ -8,6 +8,7 @@ const useUserContext = () => useContext(UserContext);
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("joblyToken");
@@ -20,8 +21,25 @@ const UserProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    // Fetch user details when user is available
+    if (user) {
+      async function fetchUserData() {
+        try {
+          const response = await JoblyApi.getUser(user.username);
+          setUserDetails(response.user);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+      fetchUserData();
+    }
+  }, [user]);
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser, userDetails, setUserDetails }}
+    >
       {children}
     </UserContext.Provider>
   );
