@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
+import {
+  Box,
+  Button,
+  Container,
+  Checkbox,
+  Grid,
+  Typography,
+  TextField,
+} from "@mui/material";
 import JoblyApi from "../api/JoblyApi";
 import JobCard from "../components/JobCard";
 
@@ -19,7 +21,6 @@ export default function CompaniesPage() {
   const [error, setError] = useState("");
 
   const fetchJobs = async (searchParams = {}) => {
-    console.log(searchParams);
     try {
       const response = await JoblyApi.getAllJobs(searchParams);
       setJobsList(response.jobs);
@@ -38,7 +39,6 @@ export default function CompaniesPage() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log(search);
     setError("");
     fetchJobs(search);
   };

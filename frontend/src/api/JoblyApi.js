@@ -25,8 +25,8 @@ class JoblyApi {
     try {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
-      console.error("API Error:", err); //err.response
-      let message = err; //err.response.data.error.message ||
+      console.error("API Error:", err.response);
+      let message = err.response.data.error.message;
       throw Array.isArray(message) ? message : [message];
     }
   }
@@ -202,11 +202,30 @@ class JoblyApi {
     const method = "patch";
     try {
       const response = await this.request(endpoint, data, method);
-      console.log("Update user response:", response);
       return response;
     } catch (err) {
       console.error("API Error:", err);
       throw err;
+    }
+  }
+
+  /** POST /[username]/jobs/[id]  { state } => { application }
+   *
+   * Returns {"applied": jobId}
+   *
+   * Authorization required: admin or same-user-as-:username
+   * */
+  static async applyToJob(username, jobId) {
+    const endpoint = `users/${username}/jobs/${jobId}`;
+    const method = "post";
+
+    try {
+      const response = await this.request(endpoint, {}, method);
+      return response;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error(err);
     }
   }
 }

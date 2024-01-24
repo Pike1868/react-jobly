@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  Typography,
+  TextField,
+} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import JoblyApi from "../api/JoblyApi";
 import { useUserContext } from "../context/UserContext";
 import { jwtDecode } from "jwt-decode";
@@ -30,8 +32,8 @@ export default function SignIn() {
         setUser({ username: decoded.username, isAdmin: decoded.isAdmin });
       }
     } catch (err) {
-      let msg = err[0];
-      setError(msg);
+      setError(err || "An error occurred during sign in, please try again.");
+      console.log(err);
     }
   };
 
@@ -54,7 +56,7 @@ export default function SignIn() {
 
         {error && <Typography color="error">{error}</Typography>}
 
-        <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -85,7 +87,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/signup" variant="body2" >
+              <Link href="/signup" variant="body2">
                 Don't have an account? Sign Up!
               </Link>
             </Grid>
