@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import { FormControlLabel, Checkbox } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import JoblyApi from "../api/JoblyApi";
 import JobCard from "../components/JobCard";

@@ -25,6 +25,7 @@ const NavBar = () => {
         flexDirection: "row",
         justifyContent: "space-between",
         backgroundColor: "#253031",
+        maxWidth: "100%",
       }}
     >
       <Link component={RouterLink} to="/" style={{ textDecoration: "none" }}>
@@ -32,7 +33,7 @@ const NavBar = () => {
           variant="h4"
           component="div"
           sx={{ margin: "1rem", fontWeight: "700", color: "#a2bd9c" }}
-          hre
+          href="/"
         >
           JOBLY
         </Typography>

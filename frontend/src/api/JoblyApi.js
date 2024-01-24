@@ -150,6 +150,65 @@ class JoblyApi {
       throw err;
     }
   }
+
+  /** GET /[jobId] => { job }
+   *
+   * Returns { id, title, salary, equity, company }
+   *   where company is { handle, name, description, numEmployees, logoUrl }
+   *
+   * Authorization required: none
+   */
+
+  static async getJob(id) {
+    const endpoint = `jobs/${id}`;
+    try {
+      const response = await this.request(endpoint);
+      return response;
+    } catch (err) {}
+  }
+
+  /** GET /[username] => { user }
+   *
+   * Returns { username, firstName, lastName, isAdmin, jobs }
+   *   where jobs is { id, title, companyHandle, companyName, state }
+   *
+   * Authorization required: admin or same user-as-:username
+   **/
+
+  static async getUser(username) {
+    const endpoint = `users/${username}`;
+    try {
+      const response = await this.request(endpoint);
+      return response;
+    } catch (err) {
+      console.error("API Error:", err);
+      throw err;
+    }
+  }
+
+  /** PATCH /[username] { user } => { user }
+   *
+   * Data can include:
+   *   { firstName, lastName, password, email }
+   *
+   * Returns { username, firstName, lastName, email, isAdmin }
+   *
+   * Authorization required: admin or same-user-as-:username
+   **/
+
+  static async updateUser(username, userData) {
+    const endpoint = `users/${username}`;
+    const data = userData;
+    const method = "patch";
+    try {
+      const response = await this.request(endpoint, data, method);
+      console.log("Update user response:", response);
+      return response;
+    } catch (err) {
+      console.error("API Error:", err);
+      throw err;
+    }
+  }
 }
 
 export default JoblyApi;
