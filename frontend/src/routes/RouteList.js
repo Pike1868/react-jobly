@@ -13,7 +13,13 @@ import UserProfile from "../pages/UserProfile";
  * RouteList Component:
  *
  * Defines all routes for app
+ *  ---Available when logged in:
  * "/": Displays homepage and user welcome message
+ * "/companies": Displays CompanyPage with all companies
+ * "/jobs": Displays JobsPage with all jobs
+ * "/profile": Displays UserProfile with user info
+ * "/companies/:handle": Displays CompanyProfile page with all jobs for that company
+ *
  * "/signin": Displays form for existing users to sign in
  * "/signup": Displays form for new users to sign up
  * - "/*": A catch-all route that redirects any paths with no matches

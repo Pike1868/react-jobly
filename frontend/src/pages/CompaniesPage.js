@@ -22,6 +22,7 @@ export default function CompaniesPage() {
   const fetchCompanies = async (searchParams = {}) => {
     try {
       const response = await JoblyApi.getAllCompanies(searchParams);
+      if(response && response.companies)
       setCompaniesList(response.companies);
     } catch (error) {
       console.error("Error fetching companies:", error);

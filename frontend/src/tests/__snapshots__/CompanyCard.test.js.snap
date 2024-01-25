@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompanyCard Component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-13i4rnv-MuiGrid-root"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-16vq84g-MuiPaper-root-MuiCard-root"
+    >
+      <div
+        class="MuiCardMedia-root css-1kxdiu9-MuiCardMedia-root"
+        role="img"
+        style="background-image: url(https://source.unsplash.com/random?backgrounds);"
+      />
+      <div
+        class="MuiCardContent-root css-2r3irp-MuiCardContent-root"
+      >
+        <h2
+          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-h93ljk-MuiTypography-root"
+        >
+          Mock Company
+        </h2>
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-zpphrz-MuiTypography-root"
+        >
+          Mock company description.
+        </p>
+        <p
+          class="MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft css-nitxol-MuiTypography-root"
+        >
+          Employees: 500
+        </p>
+      </div>
+      <div
+        class="MuiCardActions-root MuiCardActions-spacing css-dnrpxu-MuiCardActions-root"
+      >
+        <a
+          href="/companies/mock-company"
+          style="text-decoration: none;"
+        >
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall css-1knaqv7-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            View Company
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
