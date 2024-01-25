@@ -95,6 +95,16 @@ export default function UserProfile() {
       </Paper>
 
       <Container sx={{ py: 4 }} maxWidth="md">
+        <Typography
+          component="h4"
+          variant="h4"
+          align="center"
+          color="text.primary"
+          gutterBottom
+          sx={{ marginBottom: "20px" }}
+        >
+          User Job Applications:
+        </Typography>
         <JobList jobs={userDetails.applications} />
       </Container>
     </Box>

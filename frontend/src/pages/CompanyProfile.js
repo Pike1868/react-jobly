@@ -12,7 +12,9 @@ export default function CompanyProfile() {
     async function getCompanyDetails() {
       try {
         const response = await JoblyApi.getCompany(handle);
-        setCompany(response.company);
+        if (response && response.company) {
+          setCompany(response.company);
+        }
       } catch (error) {
         console.error("Error fetching company details:", error);
       }

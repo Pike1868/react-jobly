@@ -15,7 +15,7 @@ class JoblyApi {
   static token;
 
   static async request(endpoint, data = {}, method = "get") {
-    console.debug("API Call:", endpoint, data, method);
+    // console.debug("API Call:", endpoint, data, method);
 
     //there are multiple ways to pass an authorization token, this is how you pass it in the header.
     //this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
@@ -106,7 +106,14 @@ class JoblyApi {
     }
   }
 
-  /** Get details on a company by handle. */
+  /** GET /[handle]  =>  { company }
+   * Returns Company object
+   *
+   *  Where Company = { handle, name, description, numEmployees, logoUrl, jobs }
+   *   where jobs is [{ id, title, salary, equity }, ...]
+   *
+   *
+   */
 
   static async getCompany(handle) {
     try {
@@ -119,6 +126,7 @@ class JoblyApi {
   }
 
   /** GET "/jobs/" => { jobs: [ { id, title, salary, equity, companyHandle, companyName }, ...] }
+   *
    * Returns an object with an array of jobs
    *
    * Can filter on:
@@ -163,6 +171,7 @@ class JoblyApi {
     const endpoint = `jobs/${id}`;
     try {
       const response = await this.request(endpoint);
+      console.log(response);
       return response;
     } catch (err) {}
   }
