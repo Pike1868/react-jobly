@@ -33,7 +33,6 @@ export default function SignIn() {
       }
     } catch (err) {
       setError(err || "An error occurred during sign in, please try again.");
-      console.log(err);
     }
   };
 

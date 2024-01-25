@@ -171,7 +171,6 @@ class JoblyApi {
     const endpoint = `jobs/${id}`;
     try {
       const response = await this.request(endpoint);
-      console.log(response);
       return response;
     } catch (err) {}
   }
