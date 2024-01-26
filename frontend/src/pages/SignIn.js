@@ -5,10 +5,10 @@ import {
   Button,
   Container,
   Grid,
-  Link,
   Typography,
   TextField,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import JoblyApi from "../api/JoblyApi";
 import { useUserContext } from "../context/UserContext";
