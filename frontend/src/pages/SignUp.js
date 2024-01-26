@@ -18,6 +18,14 @@ export default function SignUp() {
   const { setUser } = useUserContext();
   const [error, setError] = useState("");
 
+  const formFieldNames = {
+    firstName: "First Name",
+    lastName: "Last Name",
+    username: "Username",
+    email: "Email Address",
+    password: "Password",
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -28,6 +36,26 @@ export default function SignUp() {
       email: data.get("email"),
       password: data.get("password"),
     };
+
+    //Check for empty fields
+    for (let key in newUser) {
+      if (newUser[key].trim() === "") {
+        setError(`Please enter your ${formFieldNames[key]}.`);
+        return;
+      }
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newUser.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    //Check password length
+    if (newUser.password.length < 5) {
+      setError("Password must be at least 5 characters long.");
+      return;
+    }
 
     try {
       const token = await JoblyApi.register(newUser);

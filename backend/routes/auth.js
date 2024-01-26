@@ -10,7 +10,7 @@ const router = new express.Router();
 const { createToken } = require("../helpers/tokens");
 const userAuthSchema = require("../schemas/userAuth.json");
 const userRegisterSchema = require("../schemas/userRegister.json");
-const { BadRequestError } = require("../expressError");
+const { BadRequestError, NotFoundError } = require("../expressError");
 
 /** POST /auth/token:  { username, password } => { token }
  *
@@ -47,15 +47,29 @@ router.post("/token", async function (req, res, next) {
 
 router.post("/register", async function (req, res, next) {
   try {
-    const validator = jsonschema.validate(req.body, userRegisterSchema);
-    if (!validator.valid) {
-      const errs = validator.errors.map((e) => e.stack);
-      throw new BadRequestError(errs);
-    }
+    const { username } = req.body;
+    //Check for duplicate username
+    try {
+      const response = await User.get(username);
+      return res
+        .status(400)
+        .json({ error: { message: "Please choose another username" } });
+    } catch (err) {
+      //If username doesn't exist, validate and register user
+      if (err instanceof NotFoundError) {
+        const validator = jsonschema.validate(req.body, userRegisterSchema);
+        if (!validator.valid) {
+          const errs = validator.errors.map((e) => e.stack);
+          throw new BadRequestError(errs);
+        }
 
-    const newUser = await User.register({ ...req.body, isAdmin: false });
-    const token = createToken(newUser);
-    return res.status(201).json({ token });
+        const newUser = await User.register({ ...req.body, isAdmin: false });
+        const token = createToken(newUser);
+        return res.status(201).json({ token });
+      } else {
+        throw err;
+      }
+    }
   } catch (err) {
     return next(err);
   }

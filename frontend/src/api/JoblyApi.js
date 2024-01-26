@@ -45,10 +45,12 @@ class JoblyApi {
 
     try {
       const response = await this.request(endpoint, data, method);
+      console.log(response);
       JoblyApi.token = response.token;
       localStorage.setItem("joblyToken", response.token);
       return response.token;
     } catch (err) {
+      console.log(err);
       throw err;
     }
   }
