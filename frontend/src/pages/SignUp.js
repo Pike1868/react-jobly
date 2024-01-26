@@ -5,10 +5,10 @@ import {
   Button,
   Container,
   Grid,
-  Link,
   Typography,
   TextField,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import JoblyApi from "../api/JoblyApi";
 import { jwtDecode } from "jwt-decode";
@@ -125,7 +125,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link to="/signin" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
